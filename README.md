@@ -3,7 +3,7 @@ binlog示例，依赖mysql-binlog-connector-java
 
 https://github.com/shyiko/mysql-binlog-connector-java
 
-##概述
+## 概述
 mysql-binlog-connector-java通过fork成为一个slave和master进行binlog通信，默认serverId为65535
 可重新设置serverId，不可和master或正常的slave的server_id相同
 
@@ -11,13 +11,15 @@ mysql-binlog-connector-java通过fork成为一个slave和master进行binlog通�
 
 binlog的协议中，有mysql server版本
 table_id不是创建表的时候就由服务器分配的，因此不能将table_id和实际的table做永久映射
-##几个format格式
+
+## 几个format格式
 MBR(Mix based replcation)
 binlog-format=MIXED 默认(执行普通update语句时，使用Statement,特殊情况使用Row)
 binlog-format=Row 根据行的log，如果一条sql更新了很多记录，日志量可能较大，依赖table_id将多个事件关联，TableMapEvent -> RowsDelete/Write/UpdateEvent..
                   优点是将修改前和修改后的记录值都记录下来
 binlog-format=Statement 使用执行的sql语句
-##几个常用的event
+
+## 几个常用的event
 - EventType.QUERY SBR模式，可以获取执行的sql，如果想知道是哪个表，需要匹配
 - EventType.TABLE_MAP RBR模式，获取table_id和实际的database,table
 - EventType.EXT_UPDATE_ROWS RBR模式，row更新前和更新后的值都有
