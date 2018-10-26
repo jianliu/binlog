@@ -32,6 +32,9 @@ public class GlobalListener implements BinaryLogClient.EventListener {
 
 
     public void onEvent(Event event) {
+
+        Logger.info(event);
+
         EventHeader eventHeader = event.getHeader();
         EventType eventType = eventHeader.getEventType();
 
@@ -49,6 +52,11 @@ public class GlobalListener implements BinaryLogClient.EventListener {
         } else if (eventType == EventType.EXT_WRITE_ROWS) {
             WriteRowsEventData eventData = event.getData();
             tableId = eventData.getTableId();
+        }else if(eventType == EventType.QUERY){
+            QueryEventData queryEventData = event.getData();
+            String sql = queryEventData.getSql();
+            //解析table_name
+            Logger.info(sql);
         }
 
         if (tableId != -1) {

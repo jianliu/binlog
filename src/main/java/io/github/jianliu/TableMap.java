@@ -12,9 +12,14 @@ public class TableMap {
 
     private final static ConcurrentHashMap<Long,TableMapEventData> tableIdDbMap = new ConcurrentHashMap<Long, TableMapEventData>();
 
+    /**
+     * tableId和tableMap的关系需及时更新，因为table_id是在table_cache中临时分配的，而不是永久固定的
+     * @param tableId
+     * @param tableMapEventData
+     */
     public static void register(Long tableId, TableMapEventData tableMapEventData){
         if(tableId != null && tableMapEventData != null) {
-            tableIdDbMap.putIfAbsent(tableId, tableMapEventData);
+            tableIdDbMap.put(tableId, tableMapEventData);
         }
     }
 
