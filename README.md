@@ -14,9 +14,12 @@ table_id不是创建表的时候就由服务器分配的，因此不能将table_
 
 ## 几个format格式
 MBR(Mix based replcation)
+
 binlog-format=MIXED 默认(执行普通update语句时，使用Statement,特殊情况使用Row)
+
 binlog-format=Row 根据行的log，如果一条sql更新了很多记录，日志量可能较大，依赖table_id将多个事件关联，TableMapEvent -> RowsDelete/Write/UpdateEvent..
                   优点是将修改前和修改后的记录值都记录下来
+
 binlog-format=Statement 使用执行的sql语句
 
 ## 几个常用的event
